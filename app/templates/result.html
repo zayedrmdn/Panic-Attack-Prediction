@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            width: 40%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .prediction-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .positive {
+            color: #d9534f;
+        }
+        .negative {
+            color: #5cb85c;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-clipboard-check"></i> Prediction Result</h1>
+        
+        {% if error %}
+            <p class="error"><i class="fas fa-exclamation-triangle"></i> Error: {{ error }}</p>
+        {% else %}
+            <div class="prediction-box">
+                {% if prediction == 1 %}
+                    <p class="positive"><i class="fas fa-heartbeat"></i> Panic Disorder Detected</p>
+                {% else %}
+                    <p class="negative"><i class="fas fa-smile"></i> No Panic Disorder Detected</p>
+                {% endif %}
+                <p><i class="fas fa-chart-line"></i> Probability: {{ probability[0] }} (No), {{ probability[1] }} (Yes)</p>
+
+            </div>
+        {% endif %}
+        
+        <button onclick="window.location.href='/'"><i class="fas fa-redo"></i> Try Again</button>
+    </div>
+</body>
+</html>

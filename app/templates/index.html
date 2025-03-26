@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panic Attack Detector</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            width: 40%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .icon {
+            margin-right: 8px;
+            color: #007BFF;
+        }
+    </style>
+    <script>
+        function randomizeForm() {
+            let selects = document.querySelectorAll("select");
+            selects.forEach(select => {
+                let options = select.options;
+                let randomIndex = Math.floor(Math.random() * (options.length - 1)) + 1; // Avoid selecting the "Choose..." option
+                select.selectedIndex = randomIndex;
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-heartbeat"></i> Panic Attack Detector</h1>
+        <form action="/predict_form" method="post">
+            {% for feature, options in categories.items() %}
+                <div class="form-group">
+                    <label><i class="fas fa-info-circle icon"></i> {{ feature }}:</label>
+                    <select name="{{ feature }}" required>
+                        <option value="" disabled selected>Choose…</option>
+                        {% for opt in options %}
+                            <option value="{{ opt }}">{{ opt }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endfor %}
+            <button type="button" onclick="randomizeForm()"><i class="fas fa-random"></i> Randomized</button>
+            <button type="submit"><i class="fas fa-stethoscope"></i> Predict</button>
+        </form>
+    </div>
+</body>
+</html>
